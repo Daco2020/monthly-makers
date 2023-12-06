@@ -1,7 +1,7 @@
 <script>
-	import { arrPokemon } from './../stores/pokestore.js';
+	import { arrPokemon } from './../../stores/pokestore.js';
     console.log($arrPokemon);
-    import PokemonCard from './../components/pokemonCard.svelte';
+    import PokemonCard from './../../components/pokemonCard.svelte';
 
     let searchTerm = ''
     let filteredPokemon = [];
@@ -19,16 +19,13 @@
 
 </script>
 
-<svelte:head>
-    <title>월간 메이커스</title>
-</svelte:head>
 
-<h1 class="text-4xl text-center my-8 font-bold">
-    월간 메이커스
+<h1 class="text-4xl text-center my-8 font-bold text-silver">
+    프로젝트
   </h1>
 
 <input 
-    class="w-full rounded-md text-lg p-4 mb-8 border-2 border-gray-200" 
+    class="w-full rounded-md text-lg p-4 mb-8 border border-cinnabar bg-transparent" 
     type="text" 
     bind:value={searchTerm} 
     placeholder="프로젝트 검색"
@@ -39,4 +36,3 @@
   <PokemonCard pokemon={pokemon}></PokemonCard>
 {/each}
 </div>
-

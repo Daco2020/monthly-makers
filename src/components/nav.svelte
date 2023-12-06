@@ -1,4 +1,6 @@
-<nav class="flex justify-center bg-red-300 p-3 text-xl">
-    <a class="mx-4" href="/">Home</a>
-    <a class="mx-4" href="/about">About</a>
+<nav class="fixed top-0 left-0 w-full z-10 flex justify-center bg-cinnabar py-5">
+    <div class="w-full max-w-6xl text-xl text-oxfordblue font-bold" >
+    <a class="mx-4" href="/">월간 메이커스</a>
+    <a class="mx-4" href="/project">프로젝트</a>
+</div>
 </nav>

@@ -7,8 +7,8 @@
     const name = $arrPokemon.filter(each => each.id === pokemon.id)[0].name;
 </script>
 
-<h1 class="text-4xl text-center my-8 font-bold underline">
-    Pokemon Detail
+<h1 class="text-4xl text-center my-8 font-bold ">
+    프로젝트 이름
 </h1>
 
 

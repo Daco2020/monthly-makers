@@ -3,8 +3,8 @@
   </h1>
 
   <div class="text-ivory text-lg text-center mb-20">
-    <p class="mb-2">무언가 만들기를 좋아하나요? 직접 만든 서비스를 사람들에게 알리고 싶나요?</p>
-    <p class="mb-2">지금 바로 여러분이 만든 프로젝트를 공유해보세요!</p>
+    <p class="mb-2">무언가 만들기를 좋아하나요? 직접 만든 서비스를 혼자만 보기 아깝나요?</p>
+    <p class="mb-2">여러분이 만든 프로젝트를 지금 바로 공유하고 세상에 알리세요!</p>
     </div>
 
 <form class="flex flex-col items-center" action="/projects" method="POST">

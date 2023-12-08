@@ -2,5 +2,6 @@
     <div class="w-full max-w-6xl text-xm text-ivory font-bold" >
     <a class="mx-4" href="/">월간 메이커스</a>
     <a class="mx-4" href="/share">프로젝트 공유</a>
+    <a class="mx-4" href="/community">웅성웅성</a>
 </div>
 </nav>

@@ -12,7 +12,12 @@ export default {
         silver: "#CDCDCD",
         honeydew: "#DFF8EB",
         calpolygreen: "#214e34",
+        ivory: "#f6f7eb",
         cinnabar: "#E94F37",
+        onyx: "#393e41",
+        stealblue: "#3f88c5",
+        keppel: "#44bba4",
+
       }
     }
   },

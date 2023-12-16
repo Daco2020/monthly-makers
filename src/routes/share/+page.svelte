@@ -1,8 +1,8 @@
-<h1 class="text-5xl text-center mb-8 font-bold text-ivory">
+<h1 class="text-5xl text-center mb-8 font-bold">
     프로젝트 공유
   </h1>
 
-  <div class="text-ivory text-lg text-center mb-20">
+  <div class="text-lg text-center mb-20">
     <p class="mb-2">무언가 만들기를 좋아하나요? 직접 만든 서비스를 혼자만 보기 아깝나요?</p>
     <p class="mb-2">여러분이 만든 프로젝트를 지금 바로 공유하고 세상에 알리세요!</p>
     </div>

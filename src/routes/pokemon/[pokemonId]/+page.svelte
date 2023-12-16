@@ -1,10 +1,10 @@
 <script>
-    import { arrPokemon } from '../../../stores/pokestore.js';
+    import { arrProject } from '../../../stores/pokestore.js';
     
     export let data; // page.js 가 주는 load 함수 리턴 값
     const { pokemon } = data; // pokemon 키의 값을 가져온다.
     
-    const name = $arrPokemon.filter(each => each.id === pokemon.id)[0].name;
+    const name = $arrProject.filter(each => each.id === pokemon.id)[0].name;
 </script>
 
 <h1 class="text-4xl text-center my-8 font-bold ">

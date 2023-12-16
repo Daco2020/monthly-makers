@@ -6,14 +6,14 @@
 </script>
 
 
-<a class="rounded-lg rounded-mdshadow-sm flex flex-col items-center" href={`/project/${project.id}`}
+<a class="m-3 rounded-lg rounded-mdshadow-sm flex flex-col items-center" href={`/project/${project.id}`}
 transition:fade>
 <img class="rounded-lg" src={project.image} alt={project.title} />
-<div class="w-full my-2 pb-5">
-    <h1 class="text-xl">{project.title}</h1>
+<div class="w-full my-2">
+    <h3 class="text-xl py-2">{project.title}</h3>
     <p class="text-sm">{project.description}</p>
     <div class="">
-        <span class="text-sm text-gray-500">by {project.author}</span>
+        <span class="text-sm text-gray-500">by {project.maker}</span>
     </div>
 </div>
 </a>

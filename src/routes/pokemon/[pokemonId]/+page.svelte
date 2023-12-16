@@ -1,5 +1,5 @@
-<script>
-    import { arrProject } from '../../../stores/pokestore.js';
+<!-- <script>
+    import { arrProject } from '../../../stores/projectStore.js';
     
     export let data; // page.js 가 주는 load 함수 리턴 값
     const { pokemon } = data; // pokemon 키의 값을 가져온다.
@@ -18,4 +18,4 @@
     <p>키 : {pokemon.height}</p>
     <p>무게 : {pokemon.weight}</p>
     <img class="h-40 w-40" src={pokemon.sprites.front_default} alt={pokemon.name} />
-</div>
+</div> -->

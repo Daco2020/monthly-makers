@@ -22,7 +22,7 @@
 
 <div class="text-lg text-center mb-16 mx-3">
 	<h1 class="text-5xl mb-8 font-bold">월간 메이커스</h1>
-	<p class="text-base">`월간 메이커스`는 프로젝트를 통해 성장하는 개발자 집단입니다.</p>
+	<p class="text-base">`월간 메이커스`는 만들기를 좋아하는 개발자 집단입니다.</p>
 	<p class="text-base">지금 자신의 프로젝트를 등록하고 `월간 메이커스`의 초기 멤버가 되어보세요!</p>
 </div>
 

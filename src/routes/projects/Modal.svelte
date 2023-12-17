@@ -8,27 +8,66 @@
 
 	$: if (dialog && showModal) dialog.showModal();
 
-	function handleSubmit() {
+	async function handleSubmit() {
 		localStorage.setItem('projectMaker', projectMaker);
 		localStorage.setItem('projectPassword', projectPassword);
 		localStorage.setItem('allowSNSPromotion', allowSNSPromotion);
+
 		// TODO: 폼 제출 로직 추가
-		showModal = false;
-		allowSNSPromotion = true;
-		dialog.close();
+		const formData = {
+			title: localStorage.getItem('projectTitle'),
+			description: localStorage.getItem('projectDescription'),
+			detail: localStorage.getItem('projectDetail'),
+			maker: localStorage.getItem('projectMaker'),
+			link: localStorage.getItem('projectLink'),
+			thumbnail: localStorage.getItem('projectthumbnail'),
+			password: localStorage.getItem('projectPassword'),
+			allow_sns_promotion: localStorage.getItem('allowSNSPromotion')
+		};
+		try {
+			const response = await fetch('/v1/projects', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(formData)
+			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			// 추가적인 로직 (예: 응답 처리)
+			const data = await response.json();
+			console.log(data);
+
+			allowSNSPromotion = true;
+			showModal = false;
+			dialog.close();
+
+			// 폼 제출 후 로컬 스토리지 초기화
+			localStorage.removeItem('projectTitle');
+			localStorage.removeItem('projectLink');
+			localStorage.removeItem('projectDescription');
+			localStorage.removeItem('projectDetail');
+			localStorage.removeItem('projectThumbnail');
+			localStorage.removeItem('projectMaker');
+			localStorage.removeItem('projectPassword');
+			localStorage.removeItem('allowSNSPromotion');
+		} catch (error) {
+			// alert 사용자에게 오류 메시지 표시
+			console.error('Submit error:', error);
+			alert('프로젝트 등록에 실패했습니다. 다시 시도해주세요.');
+		}
 	}
 </script>
 
-<dialog
-	bind:this={dialog}
-	on:close={() => (showModal = false)}
-	on:click|self={() => dialog.close()}
->
+<dialog bind:this={dialog} on:close={() => (showModal = false)}>
 	<div class="p-8 m-4 max-w-xs max-h-full">
 		<h2 class="font-bold text-lg mb-4 text-center">마지막 단계입니다!</h2>
 		<p class="text-sm mb-8">
-			`작성자 이름`과 `등록 비밀번호`를 입력해주세요. <br />등록 비밀번호는 프로젝트를 수정 혹은
-			삭제할 수 있어요.
+			`작성자 이름`과 `등록 비밀번호`를 입력해주세요.
+			<br />등록 비밀번호는 프로젝트를 수정 혹은 삭제할 때 사용합니다.
 		</p>
 		<form id="modalForm" class="flex flex-col items-center" on:submit|preventDefault={handleSubmit}>
 			<input

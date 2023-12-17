@@ -4,16 +4,17 @@
 	let dialog; // HTMLDialogElement
 	let projectMaker = '';
 	let projectPassword = '';
-	let SNSAgreement = true;
+	let allowSNSPromotion = true;
 
 	$: if (dialog && showModal) dialog.showModal();
 
 	function handleSubmit() {
 		localStorage.setItem('projectMaker', projectMaker);
 		localStorage.setItem('projectPassword', projectPassword);
-		localStorage.setItem('SNSAgreement', SNSAgreement);
+		localStorage.setItem('allowSNSPromotion', allowSNSPromotion);
 		// TODO: 폼 제출 로직 추가
 		showModal = false;
+		allowSNSPromotion = true;
 		dialog.close();
 	}
 </script>
@@ -24,7 +25,7 @@
 	on:click|self={() => dialog.close()}
 >
 	<div class="p-8 m-4 max-w-xs max-h-full">
-		<h2 class="font-bold text-lg mb-4">마지막 단계입니다!</h2>
+		<h2 class="font-bold text-lg mb-4 text-center">마지막 단계입니다!</h2>
 		<p class="text-sm mb-8">
 			`작성자 이름`과 `등록 비밀번호`를 입력해주세요. <br />등록 비밀번호는 프로젝트를 수정 혹은
 			삭제할 수 있어요.
@@ -53,7 +54,7 @@
 					type="checkbox"
 					id="snsPromotion"
 					class="mr-2"
-					bind:value={SNSAgreement}
+					bind:checked={allowSNSPromotion}
 					default="true"
 				/>
 				<label for="snsPromotion" class="text-sm">해당 프로젝트의 SNS 홍보를 허용합니다</label>

@@ -1,7 +1,7 @@
 <script>
 	import { arrProject } from '../stores/projectStore.js';
-	console.log($arrProject);
 	import ProjectCard from '../components/projectCard.svelte';
+	import { supabase } from '$lib/supabaseClient.js';
 
 	let searchTerm = '';
 	let filteredProject = [];
@@ -13,6 +13,22 @@
 		} else {
 			filteredProject = [...$arrProject];
 		}
+	}
+
+	export let data;
+
+	async function signInWithGithub() {
+		const { data, error } = await supabase.auth.signInWithOAuth({
+			provider: 'github',
+			options: {
+				redirectTo: '/'
+			}
+		});
+		console.log(data);
+	}
+
+	async function signOut() {
+		const { error } = await supabase.auth.signOut();
 	}
 </script>
 
@@ -40,3 +56,13 @@
 		<ProjectCard {project}></ProjectCard>
 	{/each}
 </div>
+
+<ul>
+	{#each data.projects as project}
+		<li>{project.title}</li>
+	{/each}
+</ul>
+
+<button on:click={signInWithGithub}>Sign in with GitHub</button>
+
+<button on:click={signOut}>Sign out</button>

@@ -2,20 +2,42 @@
 	import { page } from '$app/stores';
 	import { derived } from 'svelte/store';
 
+	export let signInWithGithub;
+	export let signOut;
+	export let currentUser;
+
+	let user;
+	$: currentUser().then((u) => {
+		user = u;
+	});
+
 	const currentPath = derived(page, ($page) => $page.url.pathname);
 </script>
 
-<nav class="fixed top-0 left-0 w-full z-10 flex justify-center bg-mainPurple py-4">
-	<div class="w-full max-w-6xl text-base text-gray-200 flex justify-center md:justify-end">
-		<a class="mx-4 nav-link" href="/" class:font-bold={$currentPath === '/'}>월간 메이커스</a>
-		<a class="mx-4 nav-link" href="/projects" class:font-bold={$currentPath === '/projects'}
-			>프로젝트 등록</a
-		>
-		<a class="mx-4 nav-link" href="/my" class:font-bold={$currentPath === '/my'}>내 프로젝트 관리</a
-		>
-		<a class="mx-4 nav-link" href="/community" class:font-bold={$currentPath === '/community'}
-			>커뮤니티</a
-		>
+<nav class="fixed top-0 left-0 w-full z-10 flex justify-center bg-mainPurple py-4 h-16">
+	<div
+		class="w-full max-w-6xl text-base text-gray-200 flex justify-center md:justify-between items-center"
+	>
+		<div>
+			<a class="mx-4 nav-link" href="/" class:font-bold={$currentPath === '/'}>월간 메이커스</a>
+			<a class="mx-4 nav-link" href="/projects" class:font-bold={$currentPath === '/projects'}
+				>프로젝트 등록</a
+			>
+			<a class="mx-4 nav-link" href="/my" class:font-bold={$currentPath === '/my'}
+				>내 프로젝트 관리</a
+			>
+			<a class="mx-4 nav-link" href="/community" class:font-bold={$currentPath === '/community'}
+				>커뮤니티</a
+			>
+		</div>
+		<div class="mx-4 flex justify-center md:justify-start">
+			{#if user}
+				<img class="w-8 h-8 rounded-full mx-4" src={user.user_metadata.avatar_url} alt="avatar" />
+				<button on:click={signOut}>Sign out</button>
+			{:else}
+				<button on:click={signInWithGithub}>Sign in with GitHub</button>
+			{/if}
+		</div>
 	</div>
 </nav>
 

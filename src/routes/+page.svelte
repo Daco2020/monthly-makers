@@ -16,20 +16,6 @@
 	}
 
 	export let data;
-
-	async function signInWithGithub() {
-		const { data, error } = await supabase.auth.signInWithOAuth({
-			provider: 'github',
-			options: {
-				redirectTo: '/'
-			}
-		});
-		console.log(data);
-	}
-
-	async function signOut() {
-		const { error } = await supabase.auth.signOut();
-	}
 </script>
 
 <svelte:head>
@@ -62,7 +48,3 @@
 		<li>{project.title}</li>
 	{/each}
 </ul>
-
-<button on:click={signInWithGithub}>Sign in with GitHub</button>
-
-<button on:click={signOut}>Sign out</button>

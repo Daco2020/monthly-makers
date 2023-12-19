@@ -1,13 +1,14 @@
-// src/routes/+layout.ts
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public'
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit'
+
+const supabaseUrl = import.meta.env.VITE_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY
 
 export const load = async ({ fetch, data, depends }) => {
   depends('supabase:auth')
 
   const supabase = createSupabaseLoadClient({
-    supabaseUrl: PUBLIC_SUPABASE_URL,
-    supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+    supabaseUrl: supabaseUrl,
+    supabaseKey: supabaseAnonKey,
     event: { fetch },
     serverSession: data.session,
   })

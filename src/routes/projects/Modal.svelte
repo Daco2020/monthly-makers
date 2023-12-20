@@ -1,8 +1,8 @@
 <script>
 	import { userStore } from '../../stores/userStore';
-	let user = $userStore;
+	$: user = $userStore;
 
-	export let showModal; // boolean
+	export let showModal;
 
 	let dialog; // HTMLDialogElement
 	let projectMaker = '';

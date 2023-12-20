@@ -29,6 +29,7 @@
 	async function currentUser() {
 		try {
 			const { data } = await supabase.auth.getUser();
+			userStore.set(data.user);
 			return data.user;
 		} catch (error) {
 			console.error('Error fetching user:', error);

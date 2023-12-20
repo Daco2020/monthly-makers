@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import { derived } from 'svelte/store';
 	import { onMount } from 'svelte';
-	import { userStore } from '../stores/userStore';
 
 	export let signInWithGithub;
 	export let signOut;
@@ -12,7 +11,6 @@
 
 	onMount(async () => {
 		user = await currentUser();
-		userStore.set(user);
 	});
 
 	const currentPath = derived(page, ($page) => $page.url.pathname);

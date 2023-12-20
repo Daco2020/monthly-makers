@@ -1,9 +1,12 @@
 <script>
 	import '../app.css';
 	import Nav from '../components/nav.svelte';
-
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+	import { userStore } from '../stores/userStore';
+
+	let currentPath;
 
 	export let data;
 
@@ -11,6 +14,9 @@
 	$: ({ supabase, session } = data);
 
 	onMount(() => {
+		if (browser) {
+			currentPath = window.location.href;
+		}
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
@@ -29,11 +35,12 @@
 			return null;
 		}
 	}
+
 	async function signInWithGithub() {
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: 'github',
 			options: {
-				redirectTo: '/'
+				redirectTo: currentPath
 			}
 		});
 		console.log(error);

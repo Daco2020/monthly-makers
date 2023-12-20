@@ -36,8 +36,9 @@
 
 <div class="text-lg text-center mb-16 mx-3">
 	<h1 class="text-5xl mb-8 font-bold">프로젝트 등록</h1>
-	<p class="text-base">혼자보기 아까운 여러분의 프로젝트를</p>
-	<p class="text-base">`월간 메이커스`에 등록하고 세상에 알리세요!</p>
+	<p class="text-base">
+		혼자보기 아까운 여러분의 프로젝트를 `월간 메이커스`에 등록하고 세상에 알리세요!
+	</p>
 </div>
 
 <form

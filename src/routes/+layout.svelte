@@ -5,14 +5,14 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { userStore } from '../stores/userStore';
-
-	let currentPath;
+	import { supabaseStore } from '../stores/supabaseStore';
 
 	export let data;
 
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
+	let currentPath;
 	onMount(() => {
 		if (browser) {
 			currentPath = window.location.href;
@@ -36,6 +36,7 @@
 			return null;
 		}
 	}
+	supabaseStore.set({ supabase, session });
 
 	async function signInWithGithub() {
 		const { data, error } = await supabase.auth.signInWithOAuth({

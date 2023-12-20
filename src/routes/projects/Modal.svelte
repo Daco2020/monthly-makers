@@ -1,19 +1,37 @@
 <script>
 	import { userStore } from '../../stores/userStore';
+	import { supabaseStore } from '../../stores/supabaseStore';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+
 	$: user = $userStore;
+	$: supabase = $supabaseStore.supabase;
 
 	export let showModal;
 
 	let dialog; // HTMLDialogElement
-	let projectMaker = '';
-	let projectPassword = '';
 	let allowSNSPromotion = true;
 
 	$: if (dialog && showModal) dialog.showModal();
 
+	let currentPath = '/projects';
+	onMount(() => {
+		if (browser) {
+			currentPath = window.location.href;
+		}
+	});
+	console.log(currentPath);
+	async function handleSignInButton() {
+		const { data, error } = await supabase.auth.signInWithOAuth({
+			provider: 'github',
+			options: {
+				redirectTo: currentPath
+			}
+		});
+		console.log(error);
+	}
+
 	async function handleSubmit() {
-		localStorage.setItem('projectMaker', projectMaker);
-		localStorage.setItem('projectPassword', projectPassword);
 		localStorage.setItem('allowSNSPromotion', allowSNSPromotion);
 
 		// TODO: 폼 제출 로직 추가
@@ -21,10 +39,8 @@
 			title: localStorage.getItem('projectTitle'),
 			description: localStorage.getItem('projectDescription'),
 			detail: localStorage.getItem('projectDetail'),
-			maker: localStorage.getItem('projectMaker'),
 			link: localStorage.getItem('projectLink'),
-			thumbnail: localStorage.getItem('projectthumbnail'),
-			password: localStorage.getItem('projectPassword'),
+			thumbnail: localStorage.getItem('projectThumbnail'),
 			allow_sns_promotion: localStorage.getItem('allowSNSPromotion')
 		};
 		try {
@@ -54,8 +70,6 @@
 			localStorage.removeItem('projectDescription');
 			localStorage.removeItem('projectDetail');
 			localStorage.removeItem('projectThumbnail');
-			localStorage.removeItem('projectMaker');
-			localStorage.removeItem('projectPassword');
 			localStorage.removeItem('allowSNSPromotion');
 		} catch (error) {
 			// alert 사용자에게 오류 메시지 표시
@@ -67,57 +81,57 @@
 
 <dialog bind:this={dialog} on:close={() => (showModal = false)}>
 	<div class="p-8 m-4 max-w-xs max-h-full">
-		<h2 class="font-bold text-lg mb-4 text-center">마지막 단계입니다!</h2>
 		{#if !user}
-			<p class="text-sm mb-8">프로젝트 등록을 위해 Github 로그인을 해주세요.</p>
-			<div class="flex justify-end w-full">
+			<h2 class="font-bold text-lg mb-4 text-center">메이커님의 정보가 필요해요!</h2>
+			<p class="text-center text-sm mb-4">등록 완료를 위해 Github 로그인을 해주세요.</p>
+			<div class="flex flex-col items-center">
+				<img
+					class="w-16 mb-2"
+					src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
+					alt="Github 로그인"
+				/>
 				<button
-					type="button"
-					class="text-sm ml-2 bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg focus:outline-none"
-					on:click={() => dialog.close()}>돌아가기</button
-				>
-				<a
-					href="/auth/github"
-					class="text-sm ml-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none"
-					>로그인하기</a
+					id="signInButton"
+					on:click|preventDefault={handleSignInButton}
+					class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
+					>로그인</button
 				>
 			</div>
+		{:else}
+			<h2 class="font-bold text-lg mb-4 text-center">홍보해드릴게요!</h2>
+			<p class="text-center text-sm mb-8">
+				프로젝트를 외부에 알리고 싶다면 허용해주세요. <br />홍보를 원치 않으시면 체크박스를
+				해제해주세요.
+			</p>
+			<form
+				id="modalForm"
+				class="flex flex-col items-center"
+				on:submit|preventDefault={handleSubmit}
+			>
+				<div class="flex items-center mb-8">
+					<input
+						type="checkbox"
+						id="snsPromotion"
+						class="mr-2 w-4 h-4"
+						bind:checked={allowSNSPromotion}
+						default="true"
+					/>
+					<label for="snsPromotion" class="text-base">프로젝트 홍보를 허용합니다</label>
+				</div>
+				<div class="flex justify-center w-full">
+					<button
+						type="button"
+						class="text-sm ml-2 bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg focus:outline-none"
+						on:click={() => dialog.close()}>돌아가기</button
+					>
+					<button
+						type="submit"
+						class="text-sm ml-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none"
+						>등록하기</button
+					>
+				</div>
+			</form>
 		{/if}
-
-		<form id="modalForm" class="flex flex-col items-center" on:submit|preventDefault={handleSubmit}>
-			<div class="flex items-center mb-2">
-				<input
-					type="checkbox"
-					id="snsPromotion"
-					class="mr-2"
-					bind:checked={allowSNSPromotion}
-					default="true"
-				/>
-				<label for="snsPromotion" class="text-sm">의 홍보를 허용합니다.</label>
-			</div>
-			<div class="flex items-center mb-8">
-				<input
-					type="checkbox"
-					id="snsPromotion"
-					class="mr-2"
-					bind:checked={allowSNSPromotion}
-					default="true"
-				/>
-				<label for="snsPromotion" class="text-sm">프로젝트의 홍보를 허용합니다.</label>
-			</div>
-			<div class="flex justify-center w-full">
-				<button
-					type="button"
-					class="text-sm ml-2 bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg focus:outline-none"
-					on:click={() => dialog.close()}>돌아가기</button
-				>
-				<button
-					type="submit"
-					class="text-sm ml-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none"
-					>등록하기</button
-				>
-			</div>
-		</form>
 	</div>
 </dialog>
 

@@ -93,25 +93,25 @@
 			/>
 		</div>
 		<div class="mb-8">
-			<label class="block text-gray-700 text-l font-bold mb-2" for="project-link">
+			<label class="block text-gray-700 text-l font-bold mb-2" for="project-details">
 				상세 설명
 			</label>
 			<textarea
 				class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 				id="project-details"
-				placeholder="프로젝트의 자세한 설명을 입력해주세요"
+				placeholder="프로젝트 후기 혹은 자세한 설명을 입력해주세요"
 				bind:value={projectDetail}
 				autocomplete="off"
 				rows="4"
 			></textarea>
 		</div>
 		<div class="mb-8">
-			<label class="block text-gray-700 text-l font-bold mb-2" for="project-details">
+			<label class="block text-gray-700 text-l font-bold mb-2" for="project-thumbnail">
 				썸네일
 			</label>
 			<input
 				class="bg-white shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-				id="project-image"
+				id="project-thumbnail"
 				type="file"
 				accept=".jpg, .png, .gif"
 				bind:value={projectThumbnail}

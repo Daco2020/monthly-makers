@@ -3,6 +3,7 @@
 	import { supabaseStore } from '../../stores/supabaseStore';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 
 	$: user = $userStore;
 	$: supabase = $supabaseStore.supabase;
@@ -11,6 +12,7 @@
 
 	let dialog; // HTMLDialogElement
 	let allowSNSPromotion = true;
+	let isSubmitted = false;
 
 	$: if (dialog && showModal) dialog.showModal();
 
@@ -20,7 +22,7 @@
 			currentPath = window.location.href;
 		}
 	});
-	console.log(currentPath);
+
 	async function handleSignInButton() {
 		const { data, error } = await supabase.auth.signInWithOAuth({
 			provider: 'github',
@@ -41,28 +43,15 @@
 			detail: localStorage.getItem('projectDetail'),
 			link: localStorage.getItem('projectLink'),
 			thumbnail: localStorage.getItem('projectThumbnail'),
-			allow_sns_promotion: localStorage.getItem('allowSNSPromotion')
+			allow_sns_promotion: localStorage.getItem('allowSNSPromotion'),
+			user_id: user.id,
+			maker: user.full_name
 		};
 		try {
-			const response = await fetch('/v1/projects', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(formData)
-			});
-
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-
-			// 추가적인 로직 (예: 응답 처리)
-			const data = await response.json();
-			console.log(data);
+			await supabase.from('projects').insert(formData);
 
 			allowSNSPromotion = true;
-			showModal = false;
-			dialog.close();
+			isSubmitted = true;
 
 			// 폼 제출 후 로컬 스토리지 초기화
 			localStorage.removeItem('projectTitle');
@@ -76,6 +65,13 @@
 			console.error('Submit error:', error);
 			alert('프로젝트 등록에 실패했습니다. 다시 시도해주세요.');
 		}
+	}
+
+	function closeModal() {
+		isSubmitted = false;
+		showModal = false;
+		dialog.close();
+		goto('/', { replaceState: true });
 	}
 </script>
 
@@ -95,6 +91,20 @@
 					on:click|preventDefault={handleSignInButton}
 					class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
 					>로그인</button
+				>
+			</div>
+		{:else if isSubmitted}
+			<h2 class="font-bold text-lg mb-4 text-center">등록이 완료되었습니다!</h2>
+			<div class="flex flex-col items-center">
+				<img
+					class="w-32 mb-4"
+					src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f914/u1f914_u1f973.png"
+					alt="축하합니다!"
+				/>
+				<button
+					type="button"
+					class="text-sm ml-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none"
+					on:click={closeModal}>프로젝트 보러가기</button
 				>
 			</div>
 		{:else}

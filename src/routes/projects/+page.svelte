@@ -99,7 +99,7 @@
 			<textarea
 				class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 				id="project-details"
-				placeholder="프로젝트 후기 혹은 자세한 설명을 입력해주세요"
+				placeholder="프로젝트에 대한 자세한 설명이나 후기를 입력해주세요"
 				bind:value={projectDetail}
 				autocomplete="off"
 				rows="4"

@@ -1,14 +1,8 @@
 <script>
 	import Modal from './Modal.svelte';
 	import { onMount } from 'svelte';
-
-	let showModal = false;
-
-	let projectTitle = '';
-	let projectLink = '';
-	let projectDescription = '';
-	let projectDetail = '';
-	let projectThumbnail = '';
+	import { supabaseStore } from '../../stores/supabaseStore';
+	$: supabase = $supabaseStore.supabase;
 
 	// 페이지 로드 시 로컬 스토리지에서 데이터 로드
 	onMount(async () => {
@@ -19,13 +13,77 @@
 		projectThumbnail = localStorage.getItem('projectThumbnail') || '';
 	});
 
-	function handleSubmit() {
+	let showModal = false;
+
+	let projectTitle = '';
+	let projectLink = '';
+	let projectDescription = '';
+	let projectDetail = '';
+	let projectThumbnail = '';
+
+	let fileInput;
+
+	async function handleFileChange() {
+		if (fileInput.files.length > 0) {
+			const file = fileInput.files[0];
+			const fileName = `${Date.now()}-${crypto.randomUUID()}`;
+			const filePath = `projectThumbnail/${fileName}`;
+
+			if (projectThumbnail) {
+				// 기존에 업로드된 파일이 있다면 로컬 스토리지에서 삭제
+				const imageId = projectThumbnail.split('/').slice(-1)[0];
+				const { data: deleteData, error: deleteError } = await supabase.storage
+					.from('images')
+					.remove([`projectThumbnail/${imageId}`]);
+
+				if (deleteError) {
+					console.error('Delete error:', deleteError);
+				} else {
+					console.log('Delete successful:', deleteData);
+				}
+			}
+
+			try {
+				const { data: uploadData, error: uploadError } = await supabase.storage
+					.from('images')
+					.upload(filePath, file);
+
+				if (uploadError) {
+					console.error('Upload error:', uploadError);
+				} else {
+					const { data: urlData, error: urlError } = await supabase.storage
+						.from('images')
+						.getPublicUrl(uploadData.path);
+
+					if (urlError) {
+						console.error('Error getting public URL:', urlError);
+					} else {
+						console.log(urlData);
+						console.log('Public URL:', urlData.publicUrl);
+						// 예: 업로드된 파일의 URL을 로컬 스토리지에 저장
+						projectThumbnail = urlData.publicUrl;
+						localStorage.setItem('projectThumbnail', projectThumbnail);
+					}
+					console.log('Upload successful:', uploadData);
+				}
+			} catch (error) {
+				console.error('Unexpected error:', error);
+			}
+		}
+	}
+	//hqmwrezgqrzhulqnvxyx.supabase.co/storage/v1/object/public/images/projectThumbnail/1703299629848-ec0d9dac-b535-4ffc-b7ce-f3c357532f05
+	https: 'https://hqmwrezgqrzhulqnvxyx.supabase.co/storage/v1/object/public/images/images/projectThumbnail/1703299629848-ec0d9dac-b535-4ffc-b7ce-f3c357532f05';
+	async function handleSubmit() {
 		localStorage.setItem('projectTitle', projectTitle);
 		localStorage.setItem('projectLink', projectLink);
 		localStorage.setItem('projectDescription', projectDescription);
 		localStorage.setItem('projectDetail', projectDetail);
-		localStorage.setItem('projectThumbnail', projectThumbnail);
-		// TODO: 폼 제출 로직 추가
+
+		// console.log(projectThumbnail);
+		// console.log(projectThumbnail.files);
+		// console.log(projectThumbnail.files);
+		// console.log(projectThumbnail.files[0]);
+
 		showModal = true;
 	}
 
@@ -105,20 +163,39 @@
 				rows="4"
 			></textarea>
 		</div>
-		<div class="mb-8">
-			<label class="block text-gray-700 text-l font-bold mb-2" for="project-thumbnail">
-				썸네일
-			</label>
-			<input
-				class="bg-white shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-				id="project-thumbnail"
-				type="file"
-				accept=".jpg, .png, .gif"
-				bind:value={projectThumbnail}
-				autocomplete="off"
-				required
-			/>
-		</div>
+		{#if projectThumbnail}
+			<div class="mb-8">
+				<label class="block text-gray-700 text-l font-bold mb-2" for="project-thumbnail">
+					대표 이미지 (gif 권장)
+				</label>
+				<img class="w-20 h-20 object-cover mb-4" src={projectThumbnail} alt="축하합니다!" />
+				<input
+					class="bg-white shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					id="project-thumbnail"
+					type="file"
+					accept=".jpg, .png, .gif"
+					bind:this={fileInput}
+					on:change={handleFileChange}
+					autocomplete="off"
+				/>
+			</div>
+		{:else}
+			<div class="mb-8">
+				<label class="block text-gray-700 text-l font-bold mb-2" for="project-thumbnail">
+					대표 이미지 (gif 권장)
+				</label>
+				<input
+					class="bg-white shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+					id="project-thumbnail"
+					type="file"
+					accept=".jpg, .png, .gif"
+					bind:this={fileInput}
+					on:change={handleFileChange}
+					autocomplete="off"
+					required
+				/>
+			</div>
+		{/if}
 		<div class="flex items-center justify-end mb-8">
 			<button
 				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

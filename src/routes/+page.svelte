@@ -37,7 +37,7 @@
 	/>
 </div>
 
-<div class="grid gap-2 md:grid-cols-3 grid-cols-1">
+<div class="grid gap-2 md:grid-cols-3 grid-cols-2">
 	{#each filteredProject as project}
 		<ProjectCard {project}></ProjectCard>
 	{/each}

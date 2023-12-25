@@ -1,21 +1,20 @@
 <script>
-	import { arrProject } from '../stores/projectStore.js';
+	// import { arrProject } from '../stores/projectStore.js';
 	import ProjectCard from '../components/projectCard.svelte';
 	import { supabase } from '$lib/supabaseClient.js';
 
 	let searchTerm = '';
 	let filteredProject = [];
+	export let data;
 
 	$: {
 		console.log(searchTerm);
 		if (searchTerm) {
-			filteredProject = $arrProject.filter((project) => project.name.includes(searchTerm));
+			filteredProject = data.projects.filter((project) => project.title.includes(searchTerm));
 		} else {
-			filteredProject = [...$arrProject];
+			filteredProject = [...data.projects];
 		}
 	}
-
-	export let data;
 </script>
 
 <svelte:head>
@@ -42,9 +41,3 @@
 		<ProjectCard {project}></ProjectCard>
 	{/each}
 </div>
-
-<ul>
-	{#each data.projects as project}
-		<li>{project.title}</li>
-	{/each}
-</ul>

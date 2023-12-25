@@ -61,7 +61,9 @@
 						console.log(urlData);
 						console.log('Public URL:', urlData.publicUrl);
 						// 예: 업로드된 파일의 URL을 로컬 스토리지에 저장
-						projectThumbnail = urlData.publicUrl;
+						if (urlData.publicUrl) {
+							projectThumbnail = urlData.publicUrl;
+						}
 						localStorage.setItem('projectThumbnail', projectThumbnail);
 					}
 					console.log('Upload successful:', uploadData);
@@ -168,7 +170,7 @@
 				<label class="block text-gray-700 text-l font-bold mb-2" for="project-thumbnail">
 					대표 이미지 (gif 권장)
 				</label>
-				<img class="w-20 h-20 object-cover mb-4" src={projectThumbnail} alt="축하합니다!" />
+				<img class="w-20 h-20 object-cover mb-4" src={projectThumbnail} alt="썸네일 이미지" />
 				<input
 					class="bg-white shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 					id="project-thumbnail"

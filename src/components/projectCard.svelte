@@ -6,11 +6,17 @@
 </script>
 
 <a
-	class="m-3 rounded-lg rounded-mdshadow-sm flex flex-col items-center"
+	class="m-3 rounded-lg rounded-md flex flex-col items-center"
 	href={`/project/${project.id}`}
 	transition:fade
 >
-	<img class="rounded-lg" src={project.thumbnail} alt={project.title} />
+	<div class="w-full h-60">
+		<img
+			class="w-full h-full object-cover shadow-lg rounded-lg"
+			src={project.thumbnail}
+			alt={project.title}
+		/>
+	</div>
 	<div class="w-full my-2">
 		<h3 class="text-xl py-2">{project.title}</h3>
 		<p class="text-sm">{project.description}</p>

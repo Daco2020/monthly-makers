@@ -45,7 +45,7 @@
 			thumbnail: localStorage.getItem('projectThumbnail'),
 			allow_sns_promotion: localStorage.getItem('allowSNSPromotion'),
 			user_id: user.id,
-			maker: user.full_name
+			maker: user.user_metadata.name
 		};
 		try {
 			await supabase.from('projects').insert(formData);

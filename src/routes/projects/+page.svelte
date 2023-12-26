@@ -73,7 +73,6 @@
 			}
 		}
 	}
-	//hqmwrezgqrzhulqnvxyx.supabase.co/storage/v1/object/public/images/projectThumbnail/1703299629848-ec0d9dac-b535-4ffc-b7ce-f3c357532f05
 	https: 'https://hqmwrezgqrzhulqnvxyx.supabase.co/storage/v1/object/public/images/images/projectThumbnail/1703299629848-ec0d9dac-b535-4ffc-b7ce-f3c357532f05';
 	async function handleSubmit() {
 		localStorage.setItem('projectTitle', projectTitle);
@@ -81,16 +80,7 @@
 		localStorage.setItem('projectDescription', projectDescription);
 		localStorage.setItem('projectDetail', projectDetail);
 
-		// console.log(projectThumbnail);
-		// console.log(projectThumbnail.files);
-		// console.log(projectThumbnail.files);
-		// console.log(projectThumbnail.files[0]);
-
 		showModal = true;
-	}
-
-	function closeModal() {
-		isModalOpen = false; // 모달 숨기기
 	}
 </script>
 

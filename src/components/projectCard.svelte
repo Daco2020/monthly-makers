@@ -6,7 +6,7 @@
 </script>
 
 <a
-	class="m-3 rounded-lg rounded-md flex flex-col items-center"
+	class="m-3 rounded-lg rounded-md flex flex-col items-center image-card"
 	href={`/project/${project.id}`}
 	transition:fade
 >
@@ -25,3 +25,12 @@
 		</div>
 	</div>
 </a>
+
+<style>
+	.image-card {
+		transition: transform 0.1s ease-in-out;
+	}
+	.image-card:hover {
+		transform: translateY(-5px);
+	}
+</style>

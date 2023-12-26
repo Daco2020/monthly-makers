@@ -7,7 +7,7 @@
 
 <a
 	class="m-3 rounded-lg rounded-md flex flex-col items-center image-card"
-	href={`/project/${project.id}`}
+	href={`/projects/${project.id}`}
 	transition:fade
 >
 	<div class="w-full h-60">

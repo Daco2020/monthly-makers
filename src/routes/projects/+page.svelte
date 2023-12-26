@@ -1,8 +1,7 @@
 <script>
 	import Modal from './Modal.svelte';
 	import { onMount } from 'svelte';
-	import { supabaseStore } from '../../stores/supabaseStore';
-	$: supabase = $supabaseStore.supabase;
+	import { supabase } from '../../lib/supabaseClient';
 
 	// 페이지 로드 시 로컬 스토리지에서 데이터 로드
 	onMount(async () => {

@@ -1,12 +1,11 @@
 <script>
 	import { userStore } from '../../stores/userStore';
-	import { supabaseStore } from '../../stores/supabaseStore';
+	import { supabase } from '../../lib/supabaseClient';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 
 	$: user = $userStore;
-	$: supabase = $supabaseStore.supabase;
 
 	export let showModal;
 

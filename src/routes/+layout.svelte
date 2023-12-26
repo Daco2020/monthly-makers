@@ -1,29 +1,16 @@
 <script>
 	import '../app.css';
 	import Nav from '../components/nav.svelte';
-	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { userStore } from '../stores/userStore';
-	import { supabaseStore } from '../stores/supabaseStore';
-
-	export let data;
-
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
+	import { supabase } from '../lib/supabaseClient';
 
 	let currentPath;
 	onMount(() => {
 		if (browser) {
 			currentPath = window.location.href;
 		}
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
-			}
-		});
-
-		return () => data.subscription.unsubscribe();
 	});
 
 	async function currentUser() {
@@ -36,7 +23,6 @@
 			return null;
 		}
 	}
-	supabaseStore.set({ supabase, session });
 
 	async function signInWithGithub() {
 		const { data, error } = await supabase.auth.signInWithOAuth({

@@ -75,6 +75,8 @@
 			<p class="text-gray-700 my-12">{data.detail}</p>
 			<a
 				href={data.link}
+				target="_blank"
+				rel="noopener noreferrer"
 				class="text-blue-500 hover:font-bold transition duration-300 ease-in-out flex my-8"
 				>프로젝트 보러가기</a
 			>

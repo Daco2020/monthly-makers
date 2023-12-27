@@ -9,15 +9,34 @@
 
 	// 수정 버튼 클릭 핸들러
 	async function handleEdit() {
-		console.log('edit');
-		// 수정 로직 구현
-		// 예: 사용자를 수정 페이지로 리디렉션
+		alert('수정 기능은 추후 제공할 예정입니다. 😂 현재는 삭제만 가능합니다.');
+		// const updates = {
+		// 	title,
+		// 	description,
+		// 	detail,
+		// 	thumbnail,
+		// 	link,
+		// 	updated_at: new Date()
+		// };
+
+		// const { error } = await supabase
+		// 	.from('projects')
+		// 	.update(updates)
+		// 	.match({ id: data.id, user_id: user.id });
+
+		// if (error) {
+		// 	console.error('Error updating project:', error);
+		// } else {
+		// 	// 성공적으로 업데이트되면 사용자에게 알림 또는 페이지 리디렉션
+		// 	alert('프로젝트가 업데이트되었습니다.');
+		// 	location.reload();
+		// }
 	}
 	async function handleDelete() {
 		if (confirm('이 프로젝트를 삭제하시겠습니까?')) {
 			const updates = {
 				is_active: false,
-				updated_at: new Date().toISOString()
+				updated_at: new Date()
 			};
 			const { error } = await supabase
 				.from('projects')

@@ -7,7 +7,6 @@
 	export let data;
 
 	$: {
-		console.log(searchTerm);
 		if (searchTerm) {
 			filteredProject = data.projects.filter((project) => project.title.includes(searchTerm));
 		} else {

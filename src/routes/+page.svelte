@@ -1,7 +1,6 @@
 <script>
 	// import { arrProject } from '../stores/projectStore.js';
 	import ProjectCard from '../components/projectCard.svelte';
-	import { supabase } from '$lib/supabaseClient.js';
 
 	let searchTerm = '';
 	let filteredProject = [];

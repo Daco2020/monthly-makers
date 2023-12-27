@@ -1,3 +1,8 @@
+<script>
+	export let data;
+	console.log(data);
+</script>
+
 <h1 class="text-4xl text-center my-8 font-bold">프로젝트 이름</h1>
 
 <div class="min-h-screen flex flex-col items-center justify-center">

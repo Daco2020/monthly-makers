@@ -55,32 +55,49 @@
 
 <div classsingle="min-h-screen flex flex-col items-center justify-center">
 	<!-- Detail Page Container -->
-	<div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-2xl mx-auto">
+	<div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-2xl mx-auto my-12">
 		<!-- Image -->
 		<img src={data.thumbnail} alt="Detail" class="w-full h-96 object-contain" />
 		<!-- Content -->
 		<div class="p-4">
-			<h1 class="text-2xl font-semibold mb-2">{data.title}</h1>
-			<h2 class="text-lg text-gray-700 mb-4">{data.description}</h2>
-			<p class="text-gray-700 mb-4">{data.detail}</p>
+			<div class="flex justfy-center items-center">
+				<img
+					class="w-6"
+					src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
+					alt="Github"
+				/>
+
+				<p class="text-sm text-gray-400 px-1">{data.maker}</p>
+				<p class="text-sm text-gray-400 px-1">Posted on {data.created_at.split('T')[0]}</p>
+			</div>
+			<h1 class="text-2xl font-semibold my-4">{data.title}</h1>
+			<h2 class="text-lg text-gray-700 my-4">{data.description}</h2>
+			<p class="text-gray-700 my-12">{data.detail}</p>
 			<a
 				href={data.link}
-				class="text-blue-500 hover:text-blue-700 transition duration-300 ease-in-out"
+				class="text-blue-500 hover:font-bold transition duration-300 ease-in-out flex my-8"
 				>프로젝트 보러가기</a
 			>
 			<!-- Buttons -->
 			{#if user && user.id === data.user_id}
-				<div class="flex mt-4">
+				<div class="flex my-8">
 					<button
-						class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out"
+						class="bg-blue-500 text-white px-4 py-1 mr-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out"
 						on:click={handleEdit}>수정</button
 					>
 					<button
-						class="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 transition duration-300 ease-in-out"
+						class="bg-red-500 text-white px-4 py-1 mr-2 rounded mr-2 hover:bg-red-600 transition duration-300 ease-in-out"
 						on:click={handleDelete}>삭제</button
 					>
 				</div>
 			{/if}
+		</div>
+	</div>
+	<div class="w-full max-w-2xl mx-auto my-12">
+		<div class="px-4">
+			<h1 class="text-xl text-gray-600 font-semibold my-4">
+				{data.maker}님의 다른 프로젝트
+			</h1>
 		</div>
 	</div>
 </div>

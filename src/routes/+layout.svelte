@@ -1,6 +1,6 @@
 <script>
 	import '../app.css';
-	import Nav from '../components/Nav.svelte';
+	import Nav from '../components/nav.svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { userStore } from '../stores/userStore';

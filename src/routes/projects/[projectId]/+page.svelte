@@ -72,23 +72,25 @@
 			</div>
 			<h1 class="text-2xl font-semibold my-4">{data.title}</h1>
 			<h2 class="text-lg text-gray-700 my-4">{data.description}</h2>
-			<p class="text-gray-700 my-12">{data.detail}</p>
+			<hr />
+			<p class="text-gray-700 my-8 whitespace-pre-wrap">{data.detail}</p>
+			<hr />
 			<a
 				href={data.link}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="text-blue-500 hover:font-bold transition duration-300 ease-in-out flex my-8"
+				class="text-blue-500 hover:font-bold transition duration-200 ease-in-out flex my-8"
 				>프로젝트 보러가기</a
 			>
 			<!-- Buttons -->
 			{#if user && user.id === data.user_id}
 				<div class="flex my-8">
 					<button
-						class="bg-blue-500 text-white px-4 py-1 mr-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out"
+						class="bg-blue-500 text-white px-4 py-1 mr-2 rounded hover:bg-blue-600 transition duration-200 ease-in-out"
 						on:click={handleEdit}>수정</button
 					>
 					<button
-						class="bg-red-500 text-white px-4 py-1 mr-2 rounded mr-2 hover:bg-red-600 transition duration-300 ease-in-out"
+						class="bg-red-500 text-white px-4 py-1 mr-2 rounded mr-2 hover:bg-red-600 transition duration-200 ease-in-out"
 						on:click={handleDelete}>삭제</button
 					>
 				</div>

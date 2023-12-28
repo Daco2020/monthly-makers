@@ -19,15 +19,20 @@
 	<title>월간 메이커스</title>
 </svelte:head>
 
-<div class="text-lg text-center mb-16 mx-3">
+<div class="text-lg text-center mb-8 mx-3">
 	<h1 class="text-5xl mb-8 font-bold">월간 메이커스</h1>
-	<p class="text-base">`월간 메이커스`는 만들기를 좋아하는 개발자 집단입니다.</p>
-	<p class="text-base">지금 자신의 프로젝트를 등록하고 `월간 메이커스`의 초기 멤버가 되어보세요!</p>
+	<!-- <p class="text-base">`월간 메이커스`는 만들기를 좋아하는 개발자 집단입니다.</p> -->
+	<p class="text-base">여러분이 만들고 싶은 것을 만드세요.</p>
+	<p class="text-base">월간 메이커스가 여러분의 프로젝트를 세상에 알릴게요!</p>
+	<button
+		class="my-4 py-2 text-base bg-mainPurple text-white px-4 py-1 mr-2 rounded hover:bg-blue-600 transition duration-200 ease-in-out"
+		>프로젝트 등록하기</button
+	>
 </div>
 
 <div class="flex justify-center">
 	<input
-		class="w-full rounded-md text-lg mx-3 p-4 mb-16 border-2 border-mainPurple bg-transparent"
+		class="w-full rounded-md text-lg mx-3 p-3 mb-16 border-2 border-mainPurple bg-transparent"
 		type="text"
 		bind:value={searchTerm}
 		placeholder="프로젝트 검색"

@@ -1,6 +1,6 @@
 <script>
-	import RegistrationModal from '../components/RegistrationModal.svelte';
-	import ProjectCard from '../components/ProjectCard.svelte';
+	import RegistrationModal from '../components/registrationModal.svelte';
+	import ProjectCard from '../components/projectCard.svelte';
 
 	let searchTerm = '';
 	let filteredProject = [];

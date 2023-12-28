@@ -1,5 +1,6 @@
 <script>
 	export let data;
+	console.log(data);
 
 	import { userStore } from '../../../stores/userStore';
 	import { supabase } from '$lib/supabaseClient';
@@ -22,7 +23,7 @@
 		// const { error } = await supabase
 		// 	.from('projects')
 		// 	.update(updates)
-		// 	.match({ id: data.id, user_id: user.id });
+		// 	.match({ id: data.projectData.id, user_id: user.id });
 
 		// if (error) {
 		// 	console.error('Error updating project:', error);
@@ -41,7 +42,7 @@
 			const { error } = await supabase
 				.from('projects')
 				.update(updates)
-				.match({ id: data.id, user_id: user.id });
+				.match({ id: data.projectData.id, user_id: user.id });
 
 			if (error) {
 				console.error('Error deleting project:', error);
@@ -55,9 +56,9 @@
 
 <div classsingle="min-h-screen flex flex-col items-center justify-center">
 	<!-- Detail Page Container -->
-	<div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-2xl mx-auto my-12">
+	<div class="bg-white shadow-lg overflow-hidden w-full max-w-2xl mx-auto my-12">
 		<!-- Image -->
-		<img src={data.thumbnail} alt="Detail" class="w-full h-96 object-contain" />
+		<img src={data.projectData.thumbnail} alt="Detail" class="w-full h-96 object-contain" />
 		<!-- Content -->
 		<div class="p-4">
 			<div class="flex justfy-center items-center">
@@ -67,23 +68,25 @@
 					alt="Github"
 				/>
 
-				<p class="text-sm text-gray-400 px-1">{data.maker}</p>
-				<p class="text-sm text-gray-400 px-1">Posted on {data.created_at.split('T')[0]}</p>
+				<p class="text-sm text-gray-400 px-1">{data.projectData.maker}</p>
+				<p class="text-sm text-gray-400 px-1">
+					Posted on {data.projectData.created_at.split('T')[0]}
+				</p>
 			</div>
-			<h1 class="text-2xl font-semibold my-4">{data.title}</h1>
-			<h2 class="text-lg text-gray-700 my-4">{data.description}</h2>
+			<h1 class="text-2xl font-semibold my-4">{data.projectData.title}</h1>
+			<h2 class="text-lg text-gray-700 my-4">{data.projectData.description}</h2>
 			<hr />
-			<p class="text-gray-700 my-8 whitespace-pre-wrap">{data.detail}</p>
+			<p class="text-gray-700 my-8 whitespace-pre-wrap">{data.projectData.detail}</p>
 			<hr />
 			<a
-				href={data.link}
+				href={data.projectData.link}
 				target="_blank"
 				rel="noopener noreferrer"
 				class="text-blue-500 hover:font-bold transition duration-200 ease-in-out flex my-8"
 				>프로젝트 보러가기</a
 			>
 			<!-- Buttons -->
-			{#if user && user.id === data.user_id}
+			{#if user && user.id === data.projectData.user_id}
 				<div class="flex my-8">
 					<button
 						class="bg-blue-500 text-white px-4 py-1 mr-2 rounded hover:bg-blue-600 transition duration-200 ease-in-out"
@@ -97,11 +100,47 @@
 			{/if}
 		</div>
 	</div>
-	<div class="w-full max-w-2xl mx-auto my-12">
-		<div class="px-4">
+	{#if data.otherProjectsData.length > 0}
+		<div class="w-full max-w-2xl mx-auto my-12">
 			<h1 class="text-xl text-gray-600 font-semibold my-4">
-				{data.maker}님의 다른 프로젝트
+				{data.projectData.maker}님의 다른 프로젝트
 			</h1>
+
+			<div class="flex overflow-x-auto">
+				{#each data.otherProjectsData as project}
+					<div class="min-w-60 flex-shrink-0 mr-4">
+						<a href={project.link} target="_blank" rel="noopener noreferrer">
+							<img
+								src={project.thumbnail}
+								alt={project.title}
+								class="rounded-lg w-60 h-40 object-cover"
+							/>
+							<h2 class="text-md font-semibold mt-2">{project.title}</h2>
+							<p class="text-sm text-gray-500">{project.description}</p>
+						</a>
+					</div>
+				{/each}
+			</div>
 		</div>
-	</div>
+	{/if}
 </div>
+
+<style>
+	.flex {
+		/* 스크롤 가능한 가로 컨테이너 설정 */
+		display: flex;
+		overflow-x: auto;
+	}
+
+	.min-w-60 {
+		min-width: 15rem; /* 각 아이템의 최소 너비 */
+	}
+
+	img {
+		transition: transform 0.1s; /* 이미지 호버 효과 */
+	}
+
+	img:hover {
+		transform: scale(1.03); /* 이미지 확대 효과 */
+	}
+</style>

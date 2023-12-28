@@ -30,6 +30,9 @@
 		console.log(error);
 	}
 
+	$: isFormReady =
+		projectTitle && projectLink && projectDescription && projectDetail && projectThumbnail;
+
 	async function handleFileChange() {
 		if (fileInput.files.length > 0) {
 			const file = fileInput.files[0];
@@ -37,7 +40,7 @@
 			const filePath = `projectThumbnail/${fileName}`;
 
 			if (projectThumbnail) {
-				// 기존에 업로드된 파일이 있다면 로컬 스토리지에서 삭제
+				// 기존에 업로드된 파일이 있다면 스토리지에서 삭제
 				const imageId = projectThumbnail.split('/').slice(-1)[0];
 				const { data: deleteData, error: deleteError } = await supabase.storage
 					.from('images')
@@ -246,7 +249,11 @@
 							대표 이미지 (jpg, png, gif)
 						</label>
 						{#if projectThumbnail}
-							<img class="w-20 h-20 object-cover mb-4" src={projectThumbnail} alt="썸네일 이미지" />
+							<img
+								class="w-40 h-30 object-contain mb-4"
+								src={projectThumbnail}
+								alt="썸네일 이미지"
+							/>
 							<input
 								class="bg-white shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 								id="project-thumbnail"
@@ -277,8 +284,12 @@
 						>
 						<button
 							type="submit"
-							class="text-sm ml-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none"
-							>등록하기</button
+							class={`text-sm ml-2 py-2 px-4 rounded-lg focus:outline-none ${
+								isFormReady
+									? 'bg-blue-500 hover:bg-blue-700 text-white'
+									: 'bg-gray-300 text-gray-500 cursor-not-allowed'
+							}`}
+							disabled={!isFormReady}>등록하기</button
 						>
 					</div>
 				</div>

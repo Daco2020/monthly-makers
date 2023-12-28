@@ -1,9 +1,11 @@
 <script>
-	// import { arrProject } from '../stores/projectStore.js';
+	import RegistrationModal from '../components/registrationModal.svelte';
 	import ProjectCard from '../components/projectCard.svelte';
 
 	let searchTerm = '';
 	let filteredProject = [];
+	let showModal;
+
 	export let data;
 
 	$: {
@@ -12,6 +14,10 @@
 		} else {
 			filteredProject = [...data.projects];
 		}
+	}
+
+	async function handleRegistration() {
+		showModal = true;
 	}
 </script>
 
@@ -26,7 +32,7 @@
 	<p class="text-base">월간 메이커스가 여러분의 프로젝트를 세상에 알릴게요!</p>
 	<button
 		class="my-4 py-2 text-base bg-mainPurple text-white px-4 py-1 mr-2 rounded hover:bg-blue-600 transition duration-200 ease-in-out"
-		>프로젝트 등록하기</button
+		on:click={handleRegistration}>프로젝트 등록하기</button
 	>
 </div>
 
@@ -44,3 +50,8 @@
 		<ProjectCard {project}></ProjectCard>
 	{/each}
 </div>
+
+<RegistrationModal bind:showModal>
+	<h2 slot="header">modal</h2>
+	<p>제출이 완료되었습니다!</p>
+</RegistrationModal>

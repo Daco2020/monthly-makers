@@ -22,12 +22,7 @@
 	>
 		<div>
 			<a class="mx-4 nav-link" href="/" class:font-bold={$currentPath === '/'}>월간 메이커스</a>
-			<a class="mx-4 nav-link" href="/projects" class:font-bold={$currentPath === '/projects'}
-				>프로젝트 등록</a
-			>
-			<a class="mx-4 nav-link" href="/my" class:font-bold={$currentPath === '/my'}
-				>내 프로젝트 관리</a
-			>
+			<a class="mx-4 nav-link" href="/my" class:font-bold={$currentPath === '/my'}>프로젝트 관리</a>
 			<a class="mx-4 nav-link" href="/community" class:font-bold={$currentPath === '/community'}
 				>커뮤니티</a
 			>

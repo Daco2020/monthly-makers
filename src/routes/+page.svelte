@@ -1,10 +1,10 @@
 <script>
-	import RegistrationModal from '../components/registrationModal.svelte';
-	import ProjectCard from '../components/projectCard.svelte';
+	import RegistrationModal from '../components/RegistrationModal.svelte';
+	import ProjectCard from '../components/ProjectCard.svelte';
 
 	let searchTerm = '';
 	let filteredProject = [];
-	let showModal;
+	let showModal = false;
 
 	export let data;
 
@@ -51,7 +51,4 @@
 	{/each}
 </div>
 
-<RegistrationModal bind:showModal>
-	<h2 slot="header">modal</h2>
-	<p>제출이 완료되었습니다!</p>
-</RegistrationModal>
+<RegistrationModal bind:showModal></RegistrationModal>

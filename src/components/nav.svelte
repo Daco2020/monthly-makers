@@ -27,12 +27,12 @@
 				>커뮤니티</a
 			>
 		</div>
-		<div class="mx-4 flex justify-center md:justify-start">
+		<div class="nav-link mx-4 flex justify-center md:justify-start">
 			{#if user}
-				<img class="w-8 h-8 rounded-full mx-4" src={user.user_metadata.avatar_url} alt="avatar" />
-				<button on:click={signOut}>Sign out</button>
+				<img class="w-8 h-8 rounded-full mx-2" src={user.user_metadata.avatar_url} alt="avatar" />
+				<button on:click={signOut}>로그아웃</button>
 			{:else}
-				<button on:click={signInWithGithub}>Sign in with GitHub</button>
+				<button on:click={signInWithGithub}>로그인</button>
 			{/if}
 		</div>
 	</div>

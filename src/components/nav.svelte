@@ -2,10 +2,7 @@
 	import { page } from '$app/stores';
 	import { derived } from 'svelte/store';
 	import { onMount } from 'svelte';
-
-	export let signInWithGithub;
-	export let signOut;
-	export let currentUser;
+	import { signInWithGithub, signOut, currentUser } from '../lib/auth';
 
 	let user;
 

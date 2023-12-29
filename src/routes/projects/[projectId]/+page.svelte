@@ -1,37 +1,18 @@
 <script>
 	export let data;
-	console.log(data);
+	const projectData = data.projectData;
 
 	import { userStore } from '../../../stores/userStore';
 	import { supabase } from '$lib/supabaseClient';
 	import { goto } from '$app/navigation';
+	import EditModal from '../../../components/editModal.svelte';
 
 	$: user = $userStore;
-
+	let showModal = false;
 	// 수정 버튼 클릭 핸들러
 	async function handleEdit() {
-		alert('수정 기능은 추후 제공할 예정입니다. 😂 현재는 삭제만 가능합니다.');
-		// const updates = {
-		// 	title,
-		// 	description,
-		// 	detail,
-		// 	thumbnail,
-		// 	link,
-		// 	updated_at: new Date()
-		// };
-
-		// const { error } = await supabase
-		// 	.from('projects')
-		// 	.update(updates)
-		// 	.match({ id: data.projectData.id, user_id: user.id });
-
-		// if (error) {
-		// 	console.error('Error updating project:', error);
-		// } else {
-		// 	// 성공적으로 업데이트되면 사용자에게 알림 또는 페이지 리디렉션
-		// 	alert('프로젝트가 업데이트되었습니다.');
-		// 	location.reload();
-		// }
+		showModal = true;
+		// alert('수정 기능은 추후 제공할 예정입니다. 😂 현재는 삭제만 가능합니다.');
 	}
 	async function handleDelete() {
 		if (confirm('이 프로젝트를 삭제하시겠습니까?')) {
@@ -42,7 +23,7 @@
 			const { error } = await supabase
 				.from('projects')
 				.update(updates)
-				.match({ id: data.projectData.id, user_id: user.id });
+				.match({ id: projectData.id, user_id: user.id });
 
 			if (error) {
 				console.error('Error deleting project:', error);
@@ -54,11 +35,13 @@
 	}
 </script>
 
+<EditModal bind:showModal {projectData} />
+
 <div classsingle="min-h-screen flex flex-col items-center justify-center">
 	<!-- Detail Page Container -->
-	<div class="bg-white shadow-lg overflow-hidden w-full max-w-2xl mx-auto my-12">
+	<div class="bg-white shadow-lg overflow-hidden w-full max-w-2xl mx-auto my-20">
 		<!-- Image -->
-		<img src={data.projectData.thumbnail} alt="Detail" class="w-full h-96 object-contain" />
+		<img src={projectData.thumbnail} alt="Detail" class="w-full h-96 object-contain" />
 		<!-- Content -->
 		<div class="p-4">
 			<div class="flex justfy-center items-center">
@@ -68,25 +51,25 @@
 					alt="Github"
 				/>
 
-				<p class="text-sm text-gray-400 px-1">{data.projectData.maker}</p>
+				<p class="text-sm text-gray-400 px-1">{projectData.maker}</p>
 				<p class="text-sm text-gray-400 px-1">
-					Posted on {data.projectData.created_at.split('T')[0]}
+					Posted on {projectData.created_at.split('T')[0]}
 				</p>
 			</div>
-			<h1 class="text-2xl font-semibold my-4">{data.projectData.title}</h1>
-			<h2 class="text-lg text-gray-700 my-4">{data.projectData.description}</h2>
+			<h1 class="text-2xl font-semibold my-4">{projectData.title}</h1>
+			<h2 class="text-lg text-gray-700 my-4">{projectData.description}</h2>
 			<hr />
-			<p class="text-gray-700 my-8 whitespace-pre-wrap">{data.projectData.detail}</p>
+			<p class="text-gray-700 my-8 whitespace-pre-wrap">{projectData.detail}</p>
 			<hr />
 			<a
-				href={data.projectData.link}
+				href={projectData.link}
 				target="_blank"
 				rel="noopener noreferrer"
 				class="text-blue-500 hover:font-bold transition duration-200 ease-in-out flex my-8"
 				>프로젝트 보러가기</a
 			>
 			<!-- Buttons -->
-			{#if user && user.id === data.projectData.user_id}
+			{#if user && user.id === projectData.user_id}
 				<div class="flex my-8">
 					<button
 						class="bg-blue-500 text-white px-4 py-1 mr-2 rounded hover:bg-blue-600 transition duration-200 ease-in-out"
@@ -103,7 +86,7 @@
 	{#if data.otherProjectsData.length > 0}
 		<div class="w-full max-w-2xl mx-auto my-12">
 			<h1 class="text-xl text-gray-600 font-semibold my-4">
-				{data.projectData.maker}님의 다른 프로젝트
+				{projectData.maker}님의 다른 프로젝트
 			</h1>
 
 			<div class="flex overflow-x-auto">

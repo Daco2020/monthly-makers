@@ -6,16 +6,17 @@
 	$: user = $userStore;
 
 	export let showModal;
+	export let projectData;
+	console.log(projectData);
 
 	let dialog; // HTMLDialogElement
-	let allowSNSPromotion = true;
 	let isSubmitted = false;
 
-	let projectTitle = '';
-	let projectLink = '';
-	let projectDescription = '';
-	let projectDetail = '';
-	let projectThumbnail = '';
+	let projectTitle = projectData.title;
+	let projectLink = projectData.link;
+	let projectDescription = projectData.description;
+	let projectDetail = projectData.detail;
+	let projectThumbnail = projectData.thumbnail;
 
 	let fileInput;
 
@@ -84,9 +85,7 @@
 		}
 	}
 
-	let createdProjectId;
 	async function handleSubmit() {
-		// TODO: 폼 제출 로직 추가
 		const formData = {
 			title: projectTitle,
 			link: projectLink,
@@ -95,29 +94,22 @@
 			thumbnail: projectThumbnail,
 			user_id: user.id,
 			maker: user.user_metadata.name,
-			allow_sns_promotion: false,
-			is_active: true
+			updated_at: new Date()
 		};
 		try {
-			const { data, error } = await supabase.from('projects').insert(formData).select();
-			createdProjectId = data[0].id;
-			allowSNSPromotion = true;
+			const { data, error } = await supabase
+				.from('projects')
+				.update(formData)
+				.match({ id: projectData.id, user_id: user.id })
+				.select();
 			isSubmitted = true;
 		} catch (error) {
-			// alert 사용자에게 오류 메시지 표시
 			console.error('Submit error:', error);
 			alert('프로젝트 등록에 실패했습니다. 다시 시도해주세요.');
 		}
 	}
 
-	async function closeModal(allow_sns_promotion) {
-		if (allow_sns_promotion === 'accept') {
-			await supabase
-				.from('projects')
-				.update({ allow_sns_promotion: true })
-				.match({ id: createdProjectId, user_id: user.id });
-		}
-		createdProjectId = '';
+	async function closeModal() {
 		isSubmitted = false;
 		showModal = false;
 		dialog.close();
@@ -154,28 +146,18 @@
 			</div>
 		{:else if isSubmitted}
 			<div class="flex flex-col items-center">
-				<h2 class="font-bold text-lg mb-4">등록이 완료되었습니다!</h2>
+				<h2 class="font-bold text-lg mb-4">수정이 완료되었습니다!</h2>
 				<img
 					class="w-32 mb-4"
 					src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f914/u1f914_u1f973.png"
 					alt="축하합니다!"
 				/>
+				<button
+					id="success"
+					class="text-sm ml-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none"
+					on:click={closeModal}>보러가기</button
+				>
 			</div>
-			<p class="text-center text-sm mb-8">프로젝트의 홍보를 허용하시겠어요?</p>
-			<form id="modalForm" class="flex flex-col items-center">
-				<div class="flex justify-center w-full">
-					<button
-						type="button"
-						class="text-sm ml-2 bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg focus:outline-none"
-						on:click={() => closeModal('decline')}>괜찮아요</button
-					>
-					<button
-						type="submit"
-						class="text-sm ml-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none"
-						on:click={() => closeModal('accept')}>허용할게요</button
-					>
-				</div>
-			</form>
 		{:else}
 			<form
 				class="flex flex-col items-center"
@@ -184,10 +166,8 @@
 				method="POST"
 			>
 				<div class="w-full px-10">
-					<h1 class="text-xl text-center mb-4 font-bold">등록을 도와드릴게요!</h1>
-					<p class="text-sm text-center mb-8">
-						지금 프로젝트를 등록하고 월간 메이커스 초기 멤버가 되어보세요! 🤩
-					</p>
+					<h1 class="text-xl text-center mb-4 font-bold">수정을 도와드릴게요!</h1>
+					<p class="text-sm text-center mb-8">내용을 변경한 후 [수정하기] 버튼을 눌러주세요</p>
 					<div class="mb-8">
 						<label class="block text-gray-700 text-l font-bold mb-2" for="project-title">
 							프로젝트 이름
@@ -293,7 +273,7 @@
 									? 'bg-blue-500 hover:bg-blue-700 text-white'
 									: 'bg-gray-300 text-gray-500 cursor-not-allowed'
 							}`}
-							disabled={!isFormReady}>등록하기</button
+							disabled={!isFormReady}>수정하기</button
 						>
 					</div>
 				</div>

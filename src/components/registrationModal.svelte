@@ -130,53 +130,49 @@
 	}
 </script>
 
-<dialog
-	class={isSubmitted ? '' : 'w-1/2 h-4/5 my-20'}
-	bind:this={dialog}
-	on:close={() => (showModal = false)}
->
-	<div class="p-8 m-4 max-w-full max-h-full">
-		{#if !user}
-			<h2 class="font-bold text-lg mb-4 text-center">메이커님의 인증이 필요해요!</h2>
-			<p class="text-center text-sm mb-4">프로젝트 등록를 위해 Github 로그인을 해주세요.</p>
-			<div class="flex flex-col items-center">
-				<img
-					class="w-16 mb-2"
-					src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
-					alt="Github 로그인"
-				/>
-				<button
-					id="signInButton"
-					on:click|preventDefault={handleSignInButton}
-					class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
-					>로그인</button
-				>
-			</div>
-		{:else if isSubmitted}
-			<div class="flex flex-col items-center">
-				<h2 class="font-bold text-lg mb-4">등록이 완료되었습니다!</h2>
-				<img
-					class="w-32 mb-4"
-					src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f914/u1f914_u1f973.png"
-					alt="축하합니다!"
-				/>
-			</div>
-			<p class="text-center text-sm mb-8">프로젝트의 홍보를 허용하시겠어요?</p>
+<dialog class="rounded-md p-8 md:w-fit" bind:this={dialog} on:close={() => (showModal = false)}>
+	{#if !user}
+		<h2 class="font-bold text-lg mb-4 text-center">메이커님의 인증이 필요해요!</h2>
+		<p class="text-center text-sm mb-4">프로젝트 등록를 위해 Github 로그인을 해주세요.</p>
+		<div class="flex flex-col items-center">
+			<img
+				class="w-16 mb-2"
+				src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
+				alt="Github 로그인"
+			/>
+			<button
+				id="signInButton"
+				on:click|preventDefault={handleSignInButton}
+				class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
+				>로그인</button
+			>
+		</div>
+	{:else if isSubmitted}
+		<div class="flex flex-col items-center">
+			<h2 class="font-bold text-lg mb-4">등록이 완료되었습니다!</h2>
+			<img
+				class="w-32 mb-4"
+				src="https://www.gstatic.com/android/keyboard/emojikitchen/20201001/u1f914/u1f914_u1f973.png"
+				alt="축하합니다!"
+			/>
+			<p class="text-center text-sm mb-4">프로젝트의 홍보를 허용하시겠어요?</p>
 			<form id="modalForm" class="flex flex-col items-center">
 				<div class="flex justify-center w-full">
 					<button
 						type="button"
-						class="text-sm ml-2 bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg focus:outline-none"
+						class="w-24 text-sm mx-1 bg-gray-300 hover:bg-gray-400 text-gray-800 p-2 rounded-lg focus:outline-none"
 						on:click={() => closeModal('decline')}>괜찮아요</button
 					>
 					<button
 						type="submit"
-						class="text-sm ml-2 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none"
+						class="w-24 text-sm mx-1 bg-blue-500 hover:bg-blue-700 text-white p-2 rounded-lg focus:outline-none"
 						on:click={() => closeModal('accept')}>허용할게요</button
 					>
 				</div>
 			</form>
-		{:else}
+		</div>
+	{:else}
+		<div class="p-8 m-4 max-w-full max-h-full {isSubmitted ? '' : 'inner-box'}">
 			<form
 				class="flex flex-col items-center"
 				on:submit|preventDefault={handleSubmit}
@@ -298,8 +294,8 @@
 					</div>
 				</div>
 			</form>
-		{/if}
-	</div>
+		</div>
+	{/if}
 </dialog>
 
 <style>
@@ -309,6 +305,11 @@
 		border: none;
 		padding: 0;
 	} */
+	.inner-box {
+		width: 750px;
+		padding: 0;
+		margin-top: 40px;
+	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);
 	}

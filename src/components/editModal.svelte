@@ -138,14 +138,14 @@
 			>
 		</div>
 	{:else}
-		<div class="p-8 m-4 max-w-full max-h-full {isSubmitted ? '' : 'inner-box'}">
+		<div class="max-w-full max-h-full {isSubmitted ? '' : 'inner-box'}">
 			<form
 				class="flex flex-col items-center"
 				on:submit|preventDefault={handleSubmit}
 				action="/projects"
 				method="POST"
 			>
-				<div class="w-full px-10">
+				<div class="w-full">
 					<h1 class="text-xl text-center mb-4 font-bold">수정을 도와드릴게요!</h1>
 					<p class="text-sm text-center mb-8">내용을 변경한 후 [수정하기] 버튼을 눌러주세요</p>
 					<div class="mb-8">
@@ -273,8 +273,6 @@
 	} */
 	.inner-box {
 		width: 750px;
-		padding: 0;
-		margin-top: 40px;
 	}
 
 	dialog::backdrop {

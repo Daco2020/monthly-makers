@@ -172,14 +172,14 @@
 			</form>
 		</div>
 	{:else}
-		<div class="p-8 m-4 max-w-full max-h-full {isSubmitted ? '' : 'inner-box'}">
+		<div class="max-w-full max-h-full {isSubmitted ? '' : 'inner-box'}">
 			<form
 				class="flex flex-col items-center"
 				on:submit|preventDefault={handleSubmit}
 				action="/projects"
 				method="POST"
 			>
-				<div class="w-full px-10">
+				<div class="w-full">
 					<h1 class="text-xl text-center mb-4 font-bold">등록을 도와드릴게요!</h1>
 					<p class="text-sm text-center mb-8">
 						지금 프로젝트를 등록하고 월간 메이커스 초기 멤버가 되어보세요! 🤩
@@ -307,8 +307,6 @@
 	} */
 	.inner-box {
 		width: 750px;
-		padding: 0;
-		margin-top: 40px;
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);

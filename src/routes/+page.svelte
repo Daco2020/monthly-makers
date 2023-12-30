@@ -10,7 +10,12 @@
 
 	$: {
 		if (searchTerm) {
-			filteredProject = data.projects.filter((project) => project.title.includes(searchTerm));
+			filteredProject = data.projects.filter(
+				(project) =>
+					project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					project.detail.toLowerCase().includes(searchTerm.toLowerCase())
+			);
 		} else {
 			filteredProject = [...data.projects];
 		}

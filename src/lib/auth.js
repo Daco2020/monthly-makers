@@ -1,22 +1,23 @@
 import { userStore } from '../stores/userStore';
 import { supabase } from '../lib/supabaseClient';
+import { goto } from '$app/navigation';
 
-async function currentUser() {
-    try {
-        const { data } = await supabase.auth.getUser();
-        userStore.set(data.user);
-        return data.user;
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        return null;
+
+supabase.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN') {
+      userStore.set(session.user);
+      goto('/', { replaceState: true });
     }
-}
+  });
+
 
 async function signInWithGithub() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'github'
+    await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+            redirectTo: 'http://localhost:5173/'
+          }
     });
-    console.log(error);
 }
 
 
@@ -32,4 +33,4 @@ async function signOut() {
 }
 
 
-export { currentUser, signInWithGithub, signOut };
+export { signInWithGithub, signOut };

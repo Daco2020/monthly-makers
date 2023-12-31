@@ -14,9 +14,6 @@ supabase.auth.onAuthStateChange(async (event, session) => {
 async function signInWithGithub() {
     await supabase.auth.signInWithOAuth({
         provider: 'github',
-        options: {
-            redirectTo: 'http://localhost:5173/'
-          }
     });
 }
 
